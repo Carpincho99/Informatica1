@@ -1,6 +1,5 @@
 #include<stdio.h>
 
-
 int main(void){
   int input;
   int output;
