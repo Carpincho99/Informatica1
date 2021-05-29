@@ -46,7 +46,6 @@ int main(void){
     printf("Ingrese 0 si desea cerrar cerrar el programa");
     printf(" o ingrese 1 si desea volver a ejecutarlo: ");
     do{
-      
       scanf("%d", &cent);
       
       if(cent != 1 && cent != 0){
