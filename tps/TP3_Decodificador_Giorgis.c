@@ -42,7 +42,6 @@ int main(void){
     
     printf("\n[ El número desencriptado es: %d ]", output);
     
-    //Fin del programa
     printf("\n\n*Fin del programa*\n");   
     printf("Ingrese 0 si desea cerrar cerrar el programa");
     printf(" o ingrese 1 si desea volver a ejecutarlo: ");
