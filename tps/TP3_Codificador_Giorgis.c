@@ -1,6 +1,5 @@
 #include<stdio.h>
 
-
 int main(void){
   int input;
   int output;
@@ -13,13 +12,11 @@ int main(void){
   
  
   do{
-
     printf("~ Codificador de números ~\n\n");
     printf("Este programa codifica numeros de cuatro cifras.\n");
     printf("\nIngrese un número positivo entero de cuatros cifras: ");
     
     do{
-      
       scanf("%d", &input);
       
       if(input > 9999 || input < 0){
@@ -41,16 +38,14 @@ int main(void){
     
     //printf("%d%d%d%d", decena, unidad, uMil, decena);
     output =  decena*1000 + unidad*100 + uMil*10 + centena;
+    printf("\n[ El encriptado de %d es: %04d ]", input, output);
     
-    printf("\n[ El encriptado de %d es: %d ]", input, output);
     
-    //Fin del programa
     printf("\n\n*Fin del programa*\n");
     printf("Ingrese 0 si desea cerrar el programa");
     printf(" o ingrese 1 si desea volver a ejecutarlo: ");
     
     do{ 
-      
       scanf("%d", &cent);
       
       if(cent != 1 && cent != 0){
@@ -59,9 +54,7 @@ int main(void){
       
     }while(cent != 1 && cent != 0);
     
-    
     printf("___________________________________________\n\n");
-    
   }while(cent == 1);
   
 
