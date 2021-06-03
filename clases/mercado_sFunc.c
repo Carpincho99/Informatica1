@@ -77,9 +77,10 @@ int main(void){
           if(iCP<0 || iCA<0 || iCF<0 || CB<0 || iC_OTRO<0){
            printf("\nHa ingresado un importe negativo, vuelva a ingresar los valors.\n");
           }
-        system("clear");
-        
+
         }while(iCP<0 || iCA<0 || iCF<0 || CB<0 || iC_OTRO<0); 
+
+        system("clear");
       break;
 
       case 'q':
