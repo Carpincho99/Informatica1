@@ -1,7 +1,9 @@
 #include<stdio.h>
 #include <stdlib.h>
 #if defined(_WIN32) || defined(_WIN64)
-  #define clear cls
+#define CLEAR "cls"
+#else
+#define CLEAR "clear" 
 #endif
 
 int main(void){
@@ -37,27 +39,27 @@ int main(void){
     switch(op){
       case '1': CP++;
         printf("\n");
-        system("clear");
+        system(CLEAR);
       break;
 
       case '2': CA++;
         printf("\n");
-        system("clear");
+        system(CLEAR);
        break;
 
       case '3': CF++;
         printf("\n");
-        system("clear");
+        system(CLEAR);
       break;
 
       case '4': CB++;
         printf("\n");
-        system("clear");
+        system(CLEAR);
       break;
 
       case '5': C_OTRO++;
         printf("\n");
-        system("clear");
+        system(CLEAR);
       break;
 
       case 'i':
@@ -80,14 +82,14 @@ int main(void){
 
         }while(iCP<0 || iCA<0 || iCF<0 || CB<0 || iC_OTRO<0); 
 
-        system("clear");
+        system(CLEAR);
       break;
 
       case 'q':
       break;
 
       default: 
-        system("clear");
+        system(CLEAR);
       break;
     }
 
