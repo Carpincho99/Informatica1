@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include <stdlib.h>
+
 #if defined(_WIN32) || defined(_WIN64)
 #define CLEAR "cls"
 #else
@@ -10,6 +11,7 @@ int main(void){
   int CP, CA, CF, CB, C_OTRO;
   float iCP, iCA, iCF, iCB, iC_OTRO;
   char op;
+  char c; //Limpiar buffer teclado
 
   CP = CA = CF = CB = C_OTRO = 0;
   iCP = iCA = iCF = iCB = iC_OTRO = 0;
@@ -63,6 +65,8 @@ int main(void){
       break;
 
       case 'i':
+        while((c = getchar()) != '\n');
+
         do{
           printf("\nIngrese los importes correspondientes a cada producto:\n");
           printf("\tPanadería: $");
@@ -77,7 +81,7 @@ int main(void){
           scanf("%f",&iC_OTRO);
           
           if(iCP<0 || iCA<0 || iCF<0 || CB<0 || iC_OTRO<0){
-           printf("\nHa ingresado un importe negativo, vuelva a ingresar los valors.\n");
+           printf("\nHa ingresado un importe negativo, vuelva a ingresar los valores.\n");
           }
 
         }while(iCP<0 || iCA<0 || iCF<0 || CB<0 || iC_OTRO<0); 
@@ -87,13 +91,14 @@ int main(void){
 
       case 'q':
       break;
-
+      
       default: 
+        system(CLEAR);
         system(CLEAR);
       break;
     }
 
-  } while (op != 'q');   
+  }while (op != 'q');   
 
   return 0; 
 }
