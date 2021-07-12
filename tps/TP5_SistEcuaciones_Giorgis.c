@@ -11,8 +11,7 @@
 
 int main(void){
   int matriz[N][N+1] = {0};
-  int output[N];
-  int tmp[N][N+1];
+  int tmp;
   char incog[N]; 
 
 
@@ -25,7 +24,7 @@ int main(void){
 //Carga matriz
 
   for (int i = 0; i < N; i++) {
-    for (int j = 0; j < N+1; j++) {
+    for (int j = 0; j <= N; j++) {
 //-----------------------------------------------------------
       system(CLEAR);
       printf("Calculadora de sistemas de ecuaciones lineales\n\n\n");
@@ -57,7 +56,7 @@ int main(void){
 
   for (int I = 0; I < N; I++) {
     printf("|");
-    for (int J = 0; J < N+1; J++) {
+    for (int J = 0; J <= N; J++) {
       if (J != N+1-1) {
         printf("\t%c%d.%c", matriz[I][J] < 0 ? 00 : '+', matriz[I][J], incog[J]); 
       }
@@ -79,6 +78,37 @@ int main(void){
   }
 
 //Proceso Gauss-Jordan
+
+  for (int i = 0; i < N; ++i) {
+
+    tmp = matriz[i][i];
+    for (int j = 0; j <= N; ++j) {
+      matriz[i][j] /= tmp;
+    }
+
+//  for (int I = 0; I < N; ++I) {
+//    tmp = matriz[I][i];
+//    for (int j = 0; j <= N; ++j) {
+//      matriz[I][j] -= tmp * matriz[i][j]; 
+//    }
+//  }
+
+
+  }
+
+  printf("Resultado: \n");
+  for (int I = 0; I < N; I++) {
+    printf("|");
+    for (int J = 0; J <= N; J++) {
+      if (J != N+1-1) {
+        printf("\t%c%d.%c", matriz[I][J] < 0 ? 00 : '+', matriz[I][J], incog[J]); 
+      }
+      else{
+        printf("\t  = %-5d ", matriz[I][J]); 
+      }
+    } 
+    printf("|\n");
+  }
 
 
   return 0;
