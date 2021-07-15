@@ -1,6 +1,5 @@
 #include<stdio.h>
 #include <stdlib.h>
-#include <math.h>
 
 #if defined(_WIN32) || defined(_WIN64)
 #define CLEAR "cls"
@@ -8,11 +7,13 @@
 #define CLEAR "clear" 
 #endif
 
+#define E -0.0001
 #define N 3 //Cantidad de incognitas
 
 int main(void){
   float matriz[N][N+1] = {0};
   float tmp;
+  int factorial = 1;
   char incog[N]; 
 
   for (int i = 0; i < N; i++) {
@@ -84,7 +85,12 @@ int main(void){
   }
 
 //Evitar 0 en la diagonal
-  for (int k = 0; k < pow(N,N); k++) {
+
+  for (int i = 1; i < N; i++) {
+    factorial *= i;
+  }
+
+ for (int k = 0; k < factorial; k++) {
 
     for (int i = 0; i < N; i++) {
       if (matriz[i][i] == 0) {
@@ -132,7 +138,7 @@ int main(void){
     printf("|");
     for (int J = 0; J <= N; J++) {
       if (J != N) {
-        printf("%9.2f", matriz[I][J]); 
+        printf("%9.2f", matriz[I][J] < 0 && matriz[I][J] > E ? 0 : matriz[I][J]); 
       }
       else{
         printf("  | %9.2f ", matriz[I][J]); 
