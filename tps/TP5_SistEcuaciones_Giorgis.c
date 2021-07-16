@@ -7,8 +7,8 @@
 #define CLEAR "clear" 
 #endif
 
-#define E -0.0001
-#define N 4 //Cantidad de incognitas
+#define E -0.001
+#define N 3 //Cantidad de incognitas
 
 int main(void){
   float matriz[N][N+1] = {0};
