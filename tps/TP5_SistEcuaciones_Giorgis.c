@@ -8,7 +8,7 @@
 #endif
 
 #define E -0.0001
-#define N 3 //Cantidad de incognitas
+#define N 4 //Cantidad de incognitas
 
 int main(void){
   float matriz[N][N+1] = {0};
@@ -86,7 +86,7 @@ int main(void){
 
 //Evitar 0 en la diagonal
 
-  for (int i = 1; i < N; i++) {
+  for (int i = 1; i <= N; i++) {
     factorial *= i;
   }
 
