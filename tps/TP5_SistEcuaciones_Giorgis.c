@@ -1,5 +1,5 @@
 #include<stdio.h>
-#include <stdlib.h>
+#include<stdlib.h>
 
 #if defined(_WIN32) || defined(_WIN64)
 #define CLEAR "cls"
@@ -7,7 +7,7 @@
 #define CLEAR "clear" 
 #endif
 
-#define E -0.001
+#define E -0.01
 #define N 3 //Cantidad de incognitas
 
 int main(void){
