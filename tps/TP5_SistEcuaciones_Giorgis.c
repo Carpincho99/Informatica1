@@ -50,7 +50,7 @@ int main(void){
 //-----------------------------------------------------------
       printf("\nIngrese el elemento %d;%d: ", i+1, j+1); 
       scanf("%f", &matriz[i][j]);
-      if (matriz[i][j] == 0) { //evitar imprimir +-0 al ingresar -0
+      if (matriz[i][j] == -0) { //evitar imprimir "+-0" al ingresar -0
         matriz[i][j] = 0;  
       }
     }
