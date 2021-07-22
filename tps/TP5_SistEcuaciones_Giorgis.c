@@ -87,8 +87,8 @@ int main(void){
     printf("|\n");
   }
 
-//Evitar 0 en la diagonal
 
+//Evitar 0 en la diagonal
   for (int i = 1; i <= N; i++) {
     factorial *= i;
   }
@@ -135,6 +135,7 @@ int main(void){
 
   }
 
+  
 //Matriz reducida 
   printf("\n\nMatriz reducida por filas:\n");
   for (int I = 0; I < N; I++) {
@@ -149,6 +150,7 @@ int main(void){
     } 
     printf("|\n");
   }
+
 
 //Output
   printf("\n\nResultado:\n");
