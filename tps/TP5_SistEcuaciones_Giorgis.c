@@ -8,47 +8,39 @@
 #endif
 
 #define E -0.01
-#define N 3 //Cantidad de incognitas
+#define N 4 //Cantidad de incognitas
 
 int main(void){
 	float matriz[N][N+1] = {0};
 	float tmp;
-	int factorial = 1;
 	char incog[N]; 
 	
 	for (int i = 0; i < N; i++) {
 		incog[i] = 65 + i; //ASCII
 	}
 	
-	//Carga matriz
+//Carga matriz
 	for (int i = 0; i < N; i++) {
 		for (int j = 0; j <= N; j++) {
-			//-----------------------------------------------------------
-			if (N < 8) {
-				system(CLEAR);
-				printf("Calculadora de sistemas de ecuaciones lineales compatible determinado\n\n\n");
-				printf("Sistema:\n");
-				
-				for (int I = 0; I < N; I++) {
-					printf("|");
-					for (int J = 0; J <= N; J++) {
-						if (J != N+1-1) {
-							printf("%+9.2f %-3c", matriz[I][J], incog[J]); 
-						}
-						else{
-							printf("  =  %-9.2f ", matriz[I][J]); 
-						}
-					} 
-					printf("|\n");
-				}
-			}else{
-				system(CLEAR);
-				printf("Calculadora de sistemas de ecuaciones lineales compatible determinado\n\n\n");
-				printf("La dimesión del sistema es demasiado grande para ser mostrada en pantalla. ");
-				printf("Si esto no representa un problema puede, de igual manera, ");
-				printf("definir el sistema a continuación.\n\n");
+//-----------------------------------------------------------
+			
+			system(CLEAR);
+			printf("Calculadora de sistemas de ecuaciones lineales compatible determinado\n\n\n");
+			printf("Sistema:\n");
+			
+			for (int I = 0; I < N; I++) {
+				printf("|");
+				for (int J = 0; J <= N; J++) {
+					if (J != N+1-1) {
+						printf("%+9.2f %-3c", matriz[I][J], incog[J]); 
+					}
+					else{
+						printf("  =  %-9.2f ", matriz[I][J]); 
+					}
+				} 
+				printf("|\n");
 			}
-			//-----------------------------------------------------------
+//-----------------------------------------------------------
 			printf("\nIngrese el elemento %d;%d: ", i+1, j+1); 
 			scanf("%f", &matriz[i][j]);
 			if (matriz[i][j] == -0) { //evitar imprimir "+-0" al ingresar -0
@@ -89,12 +81,8 @@ int main(void){
 	}
 	
 	
-	//Evitar 0 en la diagonal
-	for (int i = 1; i <= N; i++) {
-		factorial *= i;
-	}
-	
-	for (int k = 0; k <= factorial; k++) {
+//Evitar 0 en la diagonal
+	for (int k = 0; k < N; k++) {
 		
 		for (int i = 0; i < N; i++) {
 			if (matriz[i][i] == 0) {
@@ -117,7 +105,7 @@ int main(void){
 	}
 	
 	
-	//Proceso Gauss-Jordan
+//Proceso Gauss-Jordan
 	for (int i = 0; i < N; i++) {
 		
 		tmp = matriz[i][i];
@@ -137,7 +125,7 @@ int main(void){
 	}
 	
 	
-	//Matriz reducida 
+//Matriz reducida 
 	printf("\n\nMatriz reducida por filas:\n");
 	for (int I = 0; I < N; I++) {
 		printf("|");
@@ -153,7 +141,7 @@ int main(void){
 	}
 	
 	
-	//Output
+//Output
 	printf("\n\nResultado:\n");
 	printf("(");
 	for (int i = 0; i < N; i++) {
@@ -168,4 +156,3 @@ int main(void){
 	
 	return 0;
 }
-	
