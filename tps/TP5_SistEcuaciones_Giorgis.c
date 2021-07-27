@@ -7,8 +7,8 @@
 #define CLEAR "clear" 
 #endif
 
-#define E -0.01
-#define N 4 //Cantidad de incognitas
+#define E 0.01
+#define N 3 //Cantidad de incognitas
 
 int main(void){
 	float matriz[N][N+1] = {0};
@@ -23,7 +23,6 @@ int main(void){
 	for (int i = 0; i < N; i++) {
 		for (int j = 0; j <= N; j++) {
 //-----------------------------------------------------------
-			
 			system(CLEAR);
 			printf("Calculadora de sistemas de ecuaciones lineales compatible determinado\n\n\n");
 			printf("Sistema:\n");
@@ -35,7 +34,7 @@ int main(void){
 						printf("%+9.2f %-3c", matriz[I][J], incog[J]); 
 					}
 					else{
-						printf("  =  %-9.2f ", matriz[I][J]); 
+						printf("  =  %9.2f ", matriz[I][J]); 
 					}
 				} 
 				printf("|\n");
@@ -57,10 +56,10 @@ int main(void){
 		printf("|");
 		for (int J = 0; J <= N; J++) {
 			if (J != N) {
-				printf("%+9.2f%-3c", matriz[I][J], incog[J]); 
+				printf("%+9.2f% -3c", matriz[I][J], incog[J]); 
 			}
 			else{
-				printf("  = %-9.2f ", matriz[I][J]); 
+				printf("  =  %9.2f ", matriz[I][J]); 
 			}
 		} 
 		printf("|\n");
@@ -131,10 +130,10 @@ int main(void){
 		printf("|");
 		for (int J = 0; J <= N; J++) {
 			if (J != N) {
-				printf("%9.2f", matriz[I][J] < 0 && matriz[I][J] > E ? 0 : matriz[I][J]); 
+				printf("%9.2f", matriz[I][J] < 0 && matriz[I][J] > -E ? 0 : matriz[I][J]); 
 			}
 			else{
-				printf("  | %9.2f ", matriz[I][J]); 
+				printf("  | %9.2f ", matriz[I][J] < 0 && matriz[I][J] > -E ? 0 : matriz[I][J]); 
 			}
 		} 
 		printf("|\n");
@@ -156,3 +155,5 @@ int main(void){
 	
 	return 0;
 }
+
+
