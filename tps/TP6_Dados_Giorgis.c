@@ -18,7 +18,7 @@ int main(void){
   }
 
   printf("Valor   Cantidad de veces\n\n");
-  for (int i = 0; i < 10; i++) {
+  for (int i = 0; i < 11; i++) {
     printf("%2d:%12d\n", i+2, arr[i]);
   }
 
