@@ -38,8 +38,8 @@ void cargarArr(int arr[], int sumDados) {
 }
 
 void printArr(int arr[]) {
-  printf("Valor   Cantidad de veces\n\n");
+  printf("Valor   Cantidad de veces   Porcentaje\n\n");
   for (int i = 0; i < 11; i++) {
-    printf("%2d:%12d\n", i+2, arr[i]);
+    printf("%2d:%15d%18.2f%%\n", i+2, arr[i], (arr[i]*100.0)/M);
   }
 }
