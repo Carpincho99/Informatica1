@@ -4,9 +4,9 @@
 
 #define M 36000 //Cantidad de lanzamientos
 
-int lanzarDados ();
-void cargarArr (int*, int);
-void printArr (int*);
+int lanzarDados (void);
+void cargarArr (int[], int);
+void printArr (int[]);
 
 int main(void){
   int arr[11] = {0};
@@ -25,7 +25,7 @@ int main(void){
 }
 
 
-int lanzarDados(){
+int lanzarDados(void){
   return (1+rand()%6);
 }
 
