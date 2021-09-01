@@ -5,7 +5,6 @@
 #define M 36000 //Cantidad de lanzamientos
 
 int lanzarDados (void);
-void cargarArr (int[], int);
 void printArr (int[]);
 
 int main(void){
@@ -16,7 +15,7 @@ int main(void){
 
   for (int i = 0; i < M; i++) {
     sumDados = lanzarDados() + lanzarDados();
-    cargarArr(arr, sumDados);    
+    arr[sumDados-2]++; 
   }
 
   printArr(arr);
@@ -27,14 +26,6 @@ int main(void){
 
 int lanzarDados(void){
   return (1+rand()%6);
-}
-
-void cargarArr(int arr[], int sumDados) {
-  for (int j = 0; j < 11; j++) {
-    if (sumDados == j+2) {
-      arr[j]++; 
-    } 
-  }
 }
 
 void printArr(int arr[]) {
