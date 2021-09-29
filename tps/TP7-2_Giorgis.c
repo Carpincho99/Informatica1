@@ -8,7 +8,7 @@
 #define CLEAR "clear" 
 #endif
 
-#define TITLE "Aprenda a multiplicar v1.0\n\n"
+#define TITLE "Aprenda a multiplicar v2.0\n\n"
 #define P 3 //cantidad de preguntas
 #define PROGRESS_BAR_WIDHT 12*P
 

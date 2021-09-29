@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include<time.h>
+#include<math.h>
 
 #if defined(_WIN32) || defined(_WIN64)
 #define CLEAR "cls"
@@ -8,17 +9,20 @@
 #define CLEAR "clear" 
 #endif
 
-#define TITLE "Aprenda a multiplicar v3.0\n\n"
+#define TITLE "Aprenda a multiplicar v4.0\n\n"
 #define P 3 //cantidad de preguntas
 #define PROGRESS_BAR_WIDHT 12*P
 
-int numRand(void);
-int preg(int);
+int numRand(int);
+int setDificultad(void);
+int preg(int, int, int);
 void resultadoTest(int, int);
 void progreso(int);
 int finPrograma(void);
 
+
 int main(void){
+  int dificultad;
   int indice;
   int porcentaje;
 
@@ -27,10 +31,12 @@ int main(void){
   do{
     indice = 1;
     porcentaje = 0;
+    printf(TITLE);
+    dificultad = setDificultad();
     for (int i = 0; i < P; i++) {
       printf(TITLE);
       progreso(indice);
-      porcentaje += preg(indice);
+      porcentaje += preg(indice, numRand(dificultad), numRand(dificultad));
       indice++;
       system(CLEAR);
     }
@@ -41,19 +47,39 @@ int main(void){
 }
 
 
-int numRand(void){
-  return (rand()%10);
+int numRand(int dificultad){
+  return (rand()%(int)(pow(10, dificultad)));
 }
 
-int preg(int ind){
-  int num1 = numRand();
-  int num2 = numRand();
+int setDificultad(void){
+  int seleccion;
+
+  printf("Seleccione la dificulta\n\n");
+  printf("1) Facíl\n");
+  printf("2) Intermedio\n");
+  printf("3) Avanzado\n");
+  printf("\nOpción: ");
+  
+  do{
+    scanf("%d", &seleccion);
+    while(getchar() != '\n');
+    if (seleccion != 1 && seleccion != 2 && seleccion != 3){
+      printf("Error. Seleccione una opción valida: ");
+    }
+  }while(seleccion != 1 && seleccion != 2 && seleccion != 3);
+
+  system(CLEAR);
+  return seleccion;
+}
+
+int preg(int ind, int num1, int num2){
   int rta;
 
   printf("%d)¿Cuanto es %dx%d? \n", ind, num1, num2);
   printf("Respuesta: ");
   scanf("%d", &rta);
   while(getchar() != '\n');
+
   if(rta == num1 * num2){
     return 1; 
   }else{
