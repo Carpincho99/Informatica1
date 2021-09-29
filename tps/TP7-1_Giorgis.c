@@ -9,23 +9,27 @@
 #endif
 
 #define TITLE "Aprenda a multiplicar v1.0\n\n"
+#define PROGRESS_BAR_WIDHT 27
 #define P 3 //cantidad de preguntas
 
-
 int numRand(void);
-void preg(void);
-void rtaCorrecta(void);
-void rtaIncorrecta(void);
+void preg(int);
+void validar(int, int);
 int finPrograma(void);
+void progreso(int);
 
 int main(void){
+  int indice;
 
   srand(time(NULL)); //set rand seed
 
   do{
+    indice = 1;
     for (int i = 0; i < P; i++) {
       printf(TITLE);
-      preg();
+      progreso(indice);
+      preg(indice);
+      indice++;
       system(CLEAR);
     }
   }while(finPrograma());
@@ -38,31 +42,43 @@ int numRand(void){
   return (rand()%10);
 }
 
-void preg(void){
-  static int indice = 1;
+void preg(int ind){
   int num1 = numRand();
   int num2 = numRand();
-  int rta;
   char enter;
 
-  printf("%d)¿Cuanto es %dx%d? \n", indice, num1, num2);
+  printf("%d)¿Cuanto es %dx%d? \n", ind, num1, num2);
   printf("Respuesta: ");
+  validar(num1, num2);
+  printf("\n¡Muy bien!\n\n");
+  printf("[Pulse enter para continuar...]");
+
+  while((enter = getchar()) != '\n' && (enter = getchar()) != '\r');
+}
+
+void validar(int num1, int num2){
+  int rta;
   do{
     scanf("%d", &rta);
-  
+    while(getchar() != '\n');
+
     if (rta != num1 * num2){
       printf("\nNo. Intentelo de nuevo: ");
     }
 
   }while(rta != num1 * num2);
+}
 
-  printf("\n¡Muy bien!\n\n");
-  printf("[Pulse enter para continuar...]\n");
 
-  while((enter = getchar()) != '\n' && (enter = getchar()) != '\r'); //dischard scanf enter
-  while((enter = getchar()) != '\n' && (enter = getchar()) != '\r');
-
-  indice++;
+void progreso(int ind){
+  printf("Progreso: [");
+  for (int i = 0; i < (PROGRESS_BAR_WIDHT/P*ind); i++) {
+    printf("#");  
+  }
+  for (int i = 0; i < (PROGRESS_BAR_WIDHT - PROGRESS_BAR_WIDHT/P*ind); i++) {
+    printf("-");
+  }
+  printf("] (%d%%)\n\n",ind*100/P);
 }
 
 
@@ -73,6 +89,7 @@ int finPrograma(void){
   printf("Ingrese 0 para salir o 1 para volver a ejecutar: ");
   do{
     scanf("%d", &cent);
+    while(getchar() != '\n');
 
     if (cent != 0 && cent != 1){
       printf("Ingrese un valor valido [1/0]: ");
@@ -81,5 +98,4 @@ int finPrograma(void){
 
   system(CLEAR);
   return cent;
-
 }
