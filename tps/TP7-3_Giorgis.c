@@ -25,6 +25,7 @@ int main(void){
   srand(time(NULL)); //set rand seed
 
   do{
+    system(CLEAR);
     indice = 1;
     porcentaje = 0;
     for (int i = 0; i < P; i++) {
@@ -35,6 +36,7 @@ int main(void){
       system(CLEAR);
     }
     resultadoTest(porcentaje, P);
+    system(CLEAR);
   }while(finPrograma());
 
   return 0;
@@ -73,7 +75,6 @@ void resultadoTest (int porcentaje, int p){
 
   printf("\n[Pulse enter para continuar...]\n");
   while(getchar() != '\n');
-  system(CLEAR);
 }
 
 
@@ -103,6 +104,5 @@ int finPrograma(void){
     }
   }while(cent != 0 && cent != 1);
 
-  system(CLEAR);
   return cent;
 }

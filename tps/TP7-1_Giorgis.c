@@ -24,6 +24,7 @@ int main(void){
   srand(time(NULL)); //set rand seed
 
   do{
+    system(CLEAR);
     indice = 1;
     for (int i = 0; i < P; i++) {
       printf(TITLE);
@@ -96,6 +97,5 @@ int finPrograma(void){
     }
   }while(cent != 0 && cent != 1);
 
-  system(CLEAR);
   return cent;
 }
