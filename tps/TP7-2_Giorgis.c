@@ -9,11 +9,12 @@
 #endif
 
 #define TITLE "Aprenda a multiplicar v1.0\n\n"
-#define PROGRESS_BAR_WIDHT 27
 #define P 3 //cantidad de preguntas
+#define PROGRESS_BAR_WIDHT 12*P
 
 int numRand(void);
 void preg(int);
+void validar(int, int);
 void rtaCorrecta(void);
 void rtaIncorrecta(void);
 int finPrograma(void);
@@ -46,26 +47,28 @@ int numRand(void){
 void preg(int ind){
   int num1 = numRand();
   int num2 = numRand();
-  int rta;
   char enter;
 
   printf("%d)¿Cuanto es %dx%d? \n", ind, num1, num2);
   printf("Respuesta: ");
+  validar(num1, num2);
+  rtaCorrecta();
+  printf("\n[Pulse enter para continuar...]");
+
+  while((enter = getchar()) != '\n' && (enter = getchar()) != '\r');
+}
+
+void validar(int num1, int num2){
+  int rta;
   do{
     scanf("%d", &rta);
     while(getchar() != '\n');
-  
+
     if (rta != num1 * num2){
       rtaIncorrecta();
     }
 
   }while(rta != num1 * num2);
-
-  rtaCorrecta();
-  printf("\n[Pulse enter para continuar...]");
-
-  while((enter = getchar()) != '\n' && (enter = getchar()) != '\r');
-
 }
 
 void rtaCorrecta(void){
@@ -132,5 +135,4 @@ int finPrograma(void){
 
   system(CLEAR);
   return cent;
-
 }

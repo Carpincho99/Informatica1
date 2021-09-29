@@ -9,8 +9,8 @@
 #endif
 
 #define TITLE "Aprenda a multiplicar v1.0\n\n"
-#define PROGRESS_BAR_WIDHT 27
 #define P 3 //cantidad de preguntas
+#define PROGRESS_BAR_WIDHT 12*P
 
 int numRand(void);
 void preg(int);

@@ -9,30 +9,32 @@
 #endif
 
 #define TITLE "Aprenda a multiplicar v1.0\n\n"
-#define PROGRESS_BAR_WIDHT 27
 #define P 3 //cantidad de preguntas
+#define PROGRESS_BAR_WIDHT 12*P
 
 int numRand(void);
-void preg(int);
-void rtaCorrecta(void);
-void rtaIncorrecta(void);
-int finPrograma(void);
+int preg(int);
+void resultado_test(int, int);
 void progreso(int);
+int finPrograma(void);
 
 int main(void){
   int indice;
+  int porcentaje;
 
   srand(time(NULL)); //set rand seed
 
   do{
     indice = 1;
+    porcentaje = 0;
     for (int i = 0; i < P; i++) {
       printf(TITLE);
       progreso(indice);
-      preg(indice);
+      porcentaje += preg(indice);
       indice++;
       system(CLEAR);
     }
+    resultado_test(porcentaje, P);
   }while(finPrograma());
 
   return 0;
@@ -43,64 +45,35 @@ int numRand(void){
   return (rand()%10);
 }
 
-void preg(int ind){
+int preg(int ind){
   int num1 = numRand();
   int num2 = numRand();
   int rta;
-  char enter;
 
   printf("%d)¿Cuanto es %dx%d? \n", ind, num1, num2);
   printf("Respuesta: ");
-  do{
-    scanf("%d", &rta);
-    while(getchar() != '\n');
-  
-    if (rta != num1 * num2){
-      rtaIncorrecta();
-    }
-
-  }while(rta != num1 * num2);
-
-  rtaCorrecta();
-  printf("\n[Pulse enter para continuar...]");
-
-  while((enter = getchar()) != '\n' && (enter = getchar()) != '\r');
-
-}
-
-void rtaCorrecta(void){
-  switch(rand()%4){
-    case 0:
-      printf("\n¡Muy bien!\n");
-      break;
-    case 1:
-      printf("\n¡Excelente!\n");
-      break;
-    case 2:
-      printf("\n¡Buen trabajo!\n");
-      break;
-    case 3:
-      printf("\n¡Siga con el buen trabajo!\n");
-      break;
+  scanf("%d", &rta);
+  while(getchar() != '\n');
+  if(rta == num1 * num2){
+    return 1; 
+  }else{
+    return 0;
   }
 }
 
+void resultado_test (int porcentaje, int p){
+  printf("Resultados del test\n\n");
+  printf("Respuestas correctas: %d de %d (%d%%)\n\n", porcentaje, P, (porcentaje*100)/P);
 
-void rtaIncorrecta(void){
-  switch(rand()%4){
-    case 0:
-      printf("\nNo. Por favor intente de nuevo: ");
-      break;
-    case 1:
-      printf("\nIncorrector. Intente una vez más: ");
-      break;
-    case 2:
-      printf("\n¡No te rindas!: ");
-      break;
-    case 3:
-      printf("\nNo. Sigue intentándolo: ");
-      break;
+  if((porcentaje*100)/P < 75){
+    printf("Pídale ayuda adicional a su maestro\n");
+  }else{
+    printf("¡Felicitaciones, está listo para pasar al siguiente nivel!\n");
   }
+
+  printf("\n[Pulse enter para continuar...]\n");
+  while(getchar() != '\n');
+  system(CLEAR);
 }
 
 
@@ -132,5 +105,4 @@ int finPrograma(void){
 
   system(CLEAR);
   return cent;
-
 }
