@@ -16,23 +16,26 @@
 int numRand(int);
 int setOperacion(void);
 int setDificultad(void);
-int preg(int, int, int, char);
+int preg(int, int *, int, int, char);
 void resultadoTest(int, int);
 void progreso(int);
 int finPrograma(void);
 
-int suma(int, int, int);
-int resta(int, int, int);
-int mult(int, int, int);
-int aleatorio(int, int, int);
+int suma(int, int);
+int resta(int, int);
+int mult(int, int);
+int aleatorio(int, int);
 
-int (*op[4])(int, int, int);
+int (*op[4])(int, int);
 
 int main(void){
   int operacion;
   int dificultad;
   int indice;
   int porcentaje;
+
+  char *simbolos[3] = {"+","-","*"};
+  simbolos[3] = malloc(sizeof (char));
 
   op[0] = suma;
   op[1] = resta;
@@ -57,13 +60,15 @@ int main(void){
    for (int i = 0; i < P; i++) {
       printf(TITLE);
       progreso(indice);
-      porcentaje += (*op[operacion])(numRand(dificultad), numRand(dificultad), indice);
+      porcentaje += preg((op[operacion]()), numRand(dificultad), numRand(dificultad), simbolos[]);
       indice++;
       system(CLEAR);
     }
     resultadoTest(porcentaje, P);
     system(CLEAR);
   }while(finPrograma());
+
+  free(simbolos[3]);
 
   return 0;
 }
@@ -114,14 +119,19 @@ int setDificultad(void){
   return seleccion;
 }
 
-int preg(int ind, int num1, int num2, char simbolo){
+int preg(int ind, int (*p) (int, int), int num1, int num2, char simbolo){
   int rta;
 
   printf("%d)¿Cuanto es %d%c%d? \n", ind, num1, simbolo,  num2);
   printf("Respuesta: ");
   scanf("%d", &rta);
   while(getchar() != '\n');
-  return rta;
+
+  if(rta == (*p)(num1, num2)){
+    return 1;
+  }else {
+    return 0;
+  }
 }
 
 void resultadoTest (int porcentaje, int p){
@@ -169,32 +179,14 @@ int finPrograma(void){
 }
 
 
-int suma(int num1, int num2, int indice){
-  int rta;
-  rta = preg(indice, num1, num2, '+');
-  if(rta == num1 + num2){
-    return 1;
-  }else{
-    return 0;
-  }
+int suma(int num1, int num2){
+ return num1 + num2; 
 }
-int resta(int num1, int num2, int indice){
-  int rta;
-  rta = preg(indice, num1, num2, '-');
-  if(rta == num1 - num2){
-    return 1;
-  }else{
-    return 0;
-  }
+int resta(int num1, int num2){
+ return num1 + num2; 
 }
-int mult(int num1, int num2, int indice){
-int rta;
-  rta = preg(indice, num1, num2, '*');
-  if(rta == num1 * num2){
-    return 1;
-  }else{
-    return 0;
-  }
+int mult(int num1, int num2){
+ return num1 + num2; 
 }
 int aleatorio(int num1, int num2, int indice){
   return (*op[rand()%3])(num1, num2, indice);

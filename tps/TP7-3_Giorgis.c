@@ -13,7 +13,7 @@
 #define PROGRESS_BAR_WIDHT 12*P
 
 int numRand(void);
-int preg(int);
+int preg(int, int, int);
 void resultadoTest(int, int);
 void progreso(int);
 int finPrograma(void);
@@ -31,7 +31,7 @@ int main(void){
     for (int i = 0; i < P; i++) {
       printf(TITLE);
       progreso(indice);
-      porcentaje += preg(indice);
+      porcentaje += preg(indice, numRand(), numRand());
       indice++;
       system(CLEAR);
     }
@@ -47,15 +47,14 @@ int numRand(void){
   return (rand()%10);
 }
 
-int preg(int ind){
-  int num1 = numRand();
-  int num2 = numRand();
+int preg(int ind, int num1, int num2){
   int rta;
 
   printf("%d)¿Cuanto es %dx%d? \n", ind, num1, num2);
   printf("Respuesta: ");
   scanf("%d", &rta);
   while(getchar() != '\n');
+
   if(rta == num1 * num2){
     return 1; 
   }else{

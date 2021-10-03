@@ -34,6 +34,7 @@ int main(void){
     printf(TITLE);
     dificultad = setDificultad();
     system(CLEAR);
+
     for (int i = 0; i < P; i++) {
       printf(TITLE);
       progreso(indice);
@@ -56,7 +57,7 @@ int numRand(int dificultad){
 int setDificultad(void){
   int seleccion;
 
-  printf("Seleccione la dificulta\n\n");
+  printf("Seleccione la dificultad\n\n");
   printf("1) Facíl\n");
   printf("2) Intermedio\n");
   printf("3) Avanzado\n");
