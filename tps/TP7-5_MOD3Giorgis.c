@@ -11,21 +11,29 @@
 
 #define TITLE "Aprenda a multiplicar v4.0\n\n"
 #define P 3 //cantidad de preguntas
+#define Q 4 //cantidad de operaciones en opcion combinada
 #define PROGRESS_BAR_WIDHT 12*P
 
 int numRand(int);
 int setOperacion(void);
 int setDificultad(void);
-int preg(int, int *, int, int, char);
+int preg(int, int, int);
+int pregCombinada(int, int, int);
 void resultadoTest(int, int);
 void progreso(int);
 int finPrograma(void);
 
-int suma(int, int);
-int resta(int, int);
-int mult(int, int);
-int aleatorio(int, int);
+int suma (int num1, int num2){
+  return num1 + num2;
+}
 
+int resta (int num1, int num2){
+  return num1 - num2;
+}
+
+int mult (int num1, int num2){
+  return num1 * num2;
+}
 
 int main(void){
   int operacion;
@@ -33,42 +41,32 @@ int main(void){
   int indice;
   int porcentaje;
 
-  char *simbolos[3] = {"+","-","*"};
-  simbolos[3] = malloc(sizeof (char));
-
-  void (*op[4]) (void);
-  op[0] = suma;
-  op[1] = resta;
-  op[2] = mult;
-  op[3] = aleatorio;
-
   srand(time(NULL)); //set rand seed
 
   do{
     indice = 1;
     porcentaje = 0;
-
-    system(CLEAR);
     printf(TITLE);
     operacion = setOperacion();
     system(CLEAR);
-
     printf(TITLE);
     dificultad = setDificultad();
     system(CLEAR);
 
-   for (int i = 0; i < P; i++) {
+    for (int i = 0; i < P; i++) {
       printf(TITLE);
       progreso(indice);
-      porcentaje += preg((op[operacion]()), numRand(dificultad), numRand(dificultad), simbolos[]);
+      if(operacion == 3){
+        porcentaje += pregCombinada(indice, Q, dificultad);
+      }else{
+        porcentaje += preg(indice, numRand(dificultad), numRand(dificultad));
+      }
       indice++;
       system(CLEAR);
     }
     resultadoTest(porcentaje, P);
     system(CLEAR);
   }while(finPrograma());
-
-  free(simbolos[3]);
 
   return 0;
 }
@@ -85,7 +83,7 @@ int setOperacion(void){
   printf("1) Suma\n");
   printf("2) Resta\n");
   printf("3) Multiplicacion\n");
-  printf("4) Aleatorio\n");
+  printf("4) Combinado\n");
   printf("\nOpción: ");
 
   do{
@@ -112,26 +110,58 @@ int setDificultad(void){
     scanf("%d", &seleccion);
     while(getchar() != '\n');
     if (seleccion != 1 && seleccion != 2 && seleccion != 3){
-      printf("\nError. Seleccione una opción valida: ");
+      printf("Error. Seleccione una opción valida: ");
     }
   }while(seleccion != 1 && seleccion != 2 && seleccion != 3);
 
   return seleccion;
 }
 
-int preg(int ind, int (*p) (int, int), int num1, int num2, char simbolo){
+int preg(int ind, int num1, int num2){
   int rta;
 
-  printf("%d)¿Cuanto es %d%c%d? \n", ind, num1, simbolo,  num2);
+  printf("%d)¿Cuanto es %d%d? \n", ind, num1, num2);
+  printf("Respuesta: ");
+  scanf("%d", &rta);
+  while(getchar() != '\n');
+  
+  return 0;
+}
+
+int pregCombinada(int ind, int q, int dificultad){
+  int rta;
+  int num[q];
+  char simbolos[3] = {'+','-','*'};
+  int op;
+  int (*p[3]) (int, int);
+
+  p[0] = suma;
+  p[1] = resta;
+  p[2] = mult;
+
+  printf("%d)¿Cuanto es", ind); 
+  num[0] = numRand(dificultad);
+  printf("%d", num[0]);
+  for (int i = 1; i <= q; i++) {
+    op = rand()%2;
+    num[i] = numRand(dificultad);
+    printf(" %c %d", simbolos[op], num[i]);  
+   // printf("\nNum1-Num2: %d%d", num[0], num[i]);
+   // printf("Op: %d\n", op);
+    num[0] =+ (*p[op]) (num[0], num[i]); 
+    //printf("\nResultado: %d", resultado);
+  }
+  printf("?\n");
   printf("Respuesta: ");
   scanf("%d", &rta);
   while(getchar() != '\n');
 
-  if(rta == (*p)(num1, num2)){
+  if(num[0] == rta){
     return 1;
-  }else {
+  }else{
     return 0;
   }
+
 }
 
 void resultadoTest (int porcentaje, int p){
@@ -175,19 +205,6 @@ int finPrograma(void){
     }
   }while(cent != 0 && cent != 1);
 
+  system(CLEAR);
   return cent;
-}
-
-
-int suma(int num1, int num2){
- return num1 + num2; 
-}
-int resta(int num1, int num2){
- return num1 + num2; 
-}
-int mult(int num1, int num2){
- return num1 + num2; 
-}
-int aleatorio(int num1, int num2, int indice){
-  return (*op[rand()%3])(num1, num2, indice);
 }

@@ -13,62 +13,50 @@
 #define P 3 //cantidad de preguntas
 #define PROGRESS_BAR_WIDHT 12*P
 
+typedef struct infoRta{
+  int indice;
+  int num1;
+  int num2;
+  int rta;
+  int rtaCorrecta;
+  int output; //1=rta acertada, 0=rta incorrecta
+}infoRta_t;
+
 int numRand(int);
-int setOperacion(void);
 int setDificultad(void);
-int preg(int, int *, int, int, char);
-void resultadoTest(int, int);
+infoRta_t preg(int, int, int);
+void resultadoTest(int, int, infoRta_t []);
 void progreso(int);
 int finPrograma(void);
 
-int suma(int, int);
-int resta(int, int);
-int mult(int, int);
-int aleatorio(int, int);
-
 
 int main(void){
-  int operacion;
   int dificultad;
   int indice;
   int porcentaje;
 
-  char *simbolos[3] = {"+","-","*"};
-  simbolos[3] = malloc(sizeof (char));
-
-  void (*op[4]) (void);
-  op[0] = suma;
-  op[1] = resta;
-  op[2] = mult;
-  op[3] = aleatorio;
+  infoRta_t arrRespuestas[P];
 
   srand(time(NULL)); //set rand seed
 
   do{
     indice = 1;
     porcentaje = 0;
-
-    system(CLEAR);
-    printf(TITLE);
-    operacion = setOperacion();
-    system(CLEAR);
-
     printf(TITLE);
     dificultad = setDificultad();
     system(CLEAR);
 
-   for (int i = 0; i < P; i++) {
+    for (int i = 0; i < P; i++) {
       printf(TITLE);
       progreso(indice);
-      porcentaje += preg((op[operacion]()), numRand(dificultad), numRand(dificultad), simbolos[]);
+      arrRespuestas[i] = preg(indice, numRand(dificultad), numRand(dificultad));
+      porcentaje += arrRespuestas[i].output;
       indice++;
       system(CLEAR);
     }
-    resultadoTest(porcentaje, P);
+    resultadoTest(porcentaje, P, arrRespuestas);
     system(CLEAR);
   }while(finPrograma());
-
-  free(simbolos[3]);
 
   return 0;
 }
@@ -76,27 +64,6 @@ int main(void){
 
 int numRand(int dificultad){
   return (rand()%(int)(pow(10, dificultad)));
-}
-
-int setOperacion(void){
-  int seleccion;
-
-  printf("Seleccione la dificulta\n\n");
-  printf("1) Suma\n");
-  printf("2) Resta\n");
-  printf("3) Multiplicacion\n");
-  printf("4) Aleatorio\n");
-  printf("\nOpción: ");
-
-  do{
-    scanf("%d", &seleccion);
-    while(getchar() != '\n');
-    if (seleccion != 1 && seleccion != 2 && seleccion != 3 && seleccion != 4){
-      printf("\nError. Seleccione una seleccionción valida: ");
-    }
-  }while(seleccion != 1 && seleccion != 2 && seleccion != 3 && seleccion != 4);
-
-return seleccion-1;
 }
 
 int setDificultad(void){
@@ -112,29 +79,33 @@ int setDificultad(void){
     scanf("%d", &seleccion);
     while(getchar() != '\n');
     if (seleccion != 1 && seleccion != 2 && seleccion != 3){
-      printf("\nError. Seleccione una opción valida: ");
+      printf("Error. Seleccione una opción valida: ");
     }
   }while(seleccion != 1 && seleccion != 2 && seleccion != 3);
 
   return seleccion;
 }
 
-int preg(int ind, int (*p) (int, int), int num1, int num2, char simbolo){
+infoRta_t preg(int ind, int num1, int num2){
   int rta;
+  infoRta_t a;
 
-  printf("%d)¿Cuanto es %d%c%d? \n", ind, num1, simbolo,  num2);
+  printf("%d)¿Cuanto es %dx%d? \n", ind, num1, num2);
   printf("Respuesta: ");
   scanf("%d", &rta);
   while(getchar() != '\n');
 
-  if(rta == (*p)(num1, num2)){
-    return 1;
-  }else {
-    return 0;
-  }
+  a.indice = ind;
+  a.rta = rta;
+  a.num1 = num1;
+  a.num2 = num2;
+  a.rtaCorrecta = num1 * num2;
+  a.output = num1 * num2 == rta ? 1 : 0;
+
+ return a; 
 }
 
-void resultadoTest (int porcentaje, int p){
+void resultadoTest (int porcentaje, int p, infoRta_t a[]){
   printf("Resultados del test\n\n");
   printf("Respuestas correctas: %d de %d (%d%%)\n\n", porcentaje, P, (porcentaje*100)/P);
 
@@ -144,7 +115,19 @@ void resultadoTest (int porcentaje, int p){
     printf("¡Felicitaciones, está listo para pasar al siguiente nivel!\n");
   }
 
-  printf("\n[Pulse enter para continuar...]\n");
+  if(porcentaje != p){
+    printf("\nResumen de errores\n");
+  }
+  for (int i = 0; i < p; i++) {
+    if(a[i].output == 0){
+      printf("\nPregunta número %d\n", a[i].indice);  
+      printf("\t¿Cuanto es %dx%d ?\n", a[i].num1, a[i].num2);
+      printf("\tRespuesta ingresada: %d\n", a[i].rta);
+      printf("\tRepuesta correcta: %d\n", a[i].rtaCorrecta);
+    }
+  }
+
+  printf("\n[Pulse enter para continuar...]");
   while(getchar() != '\n');
 }
 
@@ -175,19 +158,6 @@ int finPrograma(void){
     }
   }while(cent != 0 && cent != 1);
 
+  system(CLEAR);
   return cent;
-}
-
-
-int suma(int num1, int num2){
- return num1 + num2; 
-}
-int resta(int num1, int num2){
- return num1 + num2; 
-}
-int mult(int num1, int num2){
- return num1 + num2; 
-}
-int aleatorio(int num1, int num2, int indice){
-  return (*op[rand()%3])(num1, num2, indice);
 }
