@@ -154,7 +154,7 @@ infoRta_t pregCombinada(int ind, int q, int dificultad){
   int rta;
   int num[q];
   int op[q];
-  char simbolos[3] = {'+','-','*'};
+  const char simbolos[3] = {'+','-','*'};
   infoRta_t a;
 
   int (*p[3]) (int, int);

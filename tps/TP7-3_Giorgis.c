@@ -9,8 +9,8 @@
 #endif
 
 #define TITLE "Aprenda a multiplicar v3.0\n\n"
-#define P 3 //cantidad de preguntas
-#define PROGRESS_BAR_WIDHT 12*P
+#define P 10 //cantidad de preguntas
+#define PROGRESS_BAR_WIDHT 5*P
 
 int numRand(void);
 int preg(int, int, int);
@@ -64,15 +64,15 @@ int preg(int ind, int num1, int num2){
 
 void resultadoTest (int porcentaje, int p){
   printf("Resultados del test\n\n");
-  printf("Respuestas correctas: %d de %d (%d%%)\n\n", porcentaje, P, (porcentaje*100)/P);
+  printf("Respuestas correctas: %d de %d (%d%%)\n\n", porcentaje, p, (porcentaje*100)/p);
 
-  if((porcentaje*100)/P < 75){
+  if((porcentaje*100)/p < 75){
     printf("Pídale ayuda adicional a su maestro\n");
   }else{
     printf("¡Felicitaciones, está listo para pasar al siguiente nivel!\n");
   }
 
-  printf("\n[Pulse enter para continuar...]\n");
+  printf("\n[Pulse enter para continuar...]");
   while(getchar() != '\n');
 }
 

@@ -18,37 +18,35 @@ typedef struct{
 }est_t;
 
 int setN(void);
-void load(int, est_t*);
-void view(int, est_t*);
+void load(int, FILE*);
+void view(int, FILE*);
 int menu(void);
-void delete(int, est_t*);
-void busquedaLegajo(int, est_t *);
-void ordenPromedio(int, est_t *);
-void ordenParcial1(int, est_t *);
-void ordenParcial2(int, est_t *);
-void swapEst(est_t *, int, int);
+void delete(int, FILE*);
+void busquedaLegajo(int, FILE*);
+void ordenPromedio(int, FILE*);
+void ordenParcial1(int, FILE*);
+void ordenParcial2(int, FILE*);
+void swapEst(int, int, FILE*);
 void errLegajo(void);
-int cantSinCargar(int, est_t *);
-void volver(){}
-
+int cantEst(FILE*);
 
 int main(void){
-  int n; //numero de alumnos
+  int n;
+  FILE *file;
 
-  est_t *estudiantes;
-  n = setN();
-  estudiantes = calloc(n, sizeof(est_t));
+  file = fopen("autogestion.txt", "a+");
 
-  system(CLEAR);
-
-  if (estudiantes == NULL) {
-    printf("Error al intentar acceder a la memoria. Vuelva a ejecutar el programa\n");
+  if ( file  == NULL ) {
+    printf("No se pudo abrir el archivo\n");
     return 1;
   }
 
-  view(n, estudiantes);
+  n = cantEst(file);
 
-  free(estudiantes);
+  system(CLEAR);
+  view(n, file);
+
+  fclose(file);
   return 0;
 }
 
@@ -60,60 +58,67 @@ int setN (void){
   return n;
 }
 
-void load(int n, est_t *p){
+void load(int n, FILE *file){
   int cantidad;
+  est_t estudiante;
 
-  if (cantSinCargar(n, p) == 0) {
+  if (cantEst(file) == 0) {
     printf("\nCapacidad max. de estudiantes utilizada.\n\n");
     printf("[Pulse enter para volver...]");
     while(getchar() != '\n');
   }else{
 
-    if (cantSinCargar(n, p) == 1) {
+    if (cantEst(file) == n) {
       cantidad = 1;
     }else {
-      printf("¿Cuantos estudiantes desea cargar? (max. %d): ", cantSinCargar(n, p));
+      printf("¿Cuantos estudiantes desea cargar? (max. %d): ", cantEst(n, p));
 
       do{
         scanf("%d", &cantidad);
         while(getchar() != '\n');
-        if (cantidad < 0 || cantidad > cantSinCargar(n, p)) {
-          printf("Erro. Ingrese un valor valido: ");
+        if (cantidad < 0 || cantidad > cantEst(n, p)) {
+          printf("Error. Ingrese un valor valido: ");
         }
-      }while(cantidad < 0 || cantidad > cantSinCargar(n, p));
+      }while(cantidad < 0 || cantidad > cantEst(n, p));
     }
 
     for (int i = 0; i < cantidad; i++) {
       if((p+i)->nombre[0] == 0){
         system(CLEAR);
         printf("Nombre: ");
-        scanf("%s", &(p+i*sizeof(est_t))->nombre[0]);
+        scanf("%s", &estudiante.nombre[0]);
         printf("Apellido: ");
-        scanf("%s", &(p+i*sizeof(est_t))->apellido[0]);
+        scanf("%s", &estudiante.apellido[0]);
         printf("Legajo: ");
-        scanf("%d", &(p+i*sizeof(est_t))->legajo);
+        scanf("%d", &estudiante.legajo);
         printf("Parcial 1: ");
-        scanf("%d", &(p+i*sizeof(est_t))->parcial1);
+        scanf("%d", &estudiante.parcial1);
         printf("Parcial 2: ");
-        scanf("%d", &(p+i*sizeof(est_t))->parcial2);
-        (p+i*sizeof(est_t))->promedio = ((p+i*sizeof(est_t))->parcial1 + (p+i*sizeof(est_t))->parcial2)/2;
+        scanf("%d", &estudiante.parcial2);
+        estudiante.promedio = (estudiante.parcial1 + estudiante.parcial2)/2;
+
+        fprintf(file, "%s %s %d %d %d %d\n", estudiante.nombre, 
+                                             estudiante.apellido,
+                                             estudiante.legajo,
+                                             estudiante.legajo,
+                                             estudiante.legajo,
+                                             estudiante.legajo);
       }
     }
   }
 
   system(CLEAR);
-  view(n, p);
+  view(n, p, file);
 }
 
-void view(int n, est_t *p){
-  void (*funcView[7])(int, est_t *); 
+void view(int n, est_t *p, FILE *file){
+  void (*funcView[6])(int, est_t *); 
   funcView[0] = load;
   funcView[1] = delete;
   funcView[2] = ordenPromedio;
   funcView[3] = ordenParcial1;
   funcView[4] = ordenParcial2;
   funcView[5] = busquedaLegajo;
-  funcView[6] = volver;
 
   char *header[7] = {"|Nombre", "|Apellido", "|Legajo", "|Parcial 1", "|Parcial 2", "|Promedio", "|Estado académico"};
 
@@ -123,32 +128,18 @@ void view(int n, est_t *p){
     printf("%*s", COL_WIDTH, *(header+i));
   }
   printf("\n+------------------------------------------------------------------------------------------+\n");
+   char linea[160];
+  rewind(file);
+  fgets(linea, 160, file);
+  while (!feof(file)) {
+    fputs(linea, stdout);
+    fgets(linea, 160, file);
 
-  for (int i = 0; i < n; i++) {
-    if((p+i*sizeof(est_t))->nombre[0] != 0){
-      printf(" %*s", COL_WIDTH, (p+i*sizeof(est_t))->nombre);
-      printf("%*s", COL_WIDTH, (p+i*sizeof(est_t))->apellido);
-      printf("%*d", COL_WIDTH, (p+i*sizeof(est_t))->legajo);
-      printf("%*d", COL_WIDTH, (p+i*sizeof(est_t))->parcial1);
-      printf("%*d", COL_WIDTH, (p+i*sizeof(est_t))->parcial2);
-      printf("%*d", COL_WIDTH, (p+i*sizeof(est_t))->promedio);
-      if ((p+i)->promedio < 6) {
-        printf("%*s", COL_WIDTH, "Desaprobado");
-      }
-      if ((p+i)->promedio == 6) {
-        printf("%*s", COL_WIDTH, "Regular");
-      }
-      if ((p+i)->promedio > 6) {
-        printf("%*s", COL_WIDTH, "Aprobación directa");
-      }
-      printf("\n");
-    }
-  }
-  if (cantSinCargar(n, p) == n) {
+  if (cantEst(n, p) == n) {
     printf("%*s %s\n", COL_WIDTH, " ",  "No se ha cargado ningún estudiante aún");
   }
   printf("+------------------------------------------------------------------------------------------+\n");
-  printf("Cantidad total de alumnos cargados: %d\n\n", n-cantSinCargar(n, p));
+  printf("Cantidad total de alumnos cargados: %d\n\n", n-cantEst(n, p));
 
   funcView[menu()](n, p);
 }
@@ -273,14 +264,15 @@ void errLegajo(void){
   while(getchar() != '\n');
 }
 
-int cantSinCargar(int n, est_t *p){
+int cantEst(FILE *file){
   int cant = 0;
 
-  for (int i = 0; i < n; ++i) {
-    if((p+i*sizeof(est_t))->nombre[0] == 0){
-      cant++;
+  while (!feof(file)) {
+    if (fgetc(file) == '\n') {
+    cant++;
     }
-  }
+  } 
+
   return cant;
 }
 

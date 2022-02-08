@@ -10,9 +10,9 @@
 #endif
 
 #define TITLE "Aprenda a multiplicar v5.0\n\n"
-#define P 3 //cantidad de preguntas
-#define Q 5 //cantidad de operaciones en opcion combinada
-#define PROGRESS_BAR_WIDHT 12*P
+#define P 10 //cantidad de preguntas
+#define Q 5 //cantidad de operaciones en opción combinada
+#define PROGRESS_BAR_WIDHT 5*P
 
 int numRand(int);
 int setOperacion(void);
@@ -77,7 +77,7 @@ int setOperacion(void){
   printf("Seleccione la dificulta\n\n");
   printf("1) Suma\n");
   printf("2) Resta\n");
-  printf("3) Multiplicacion\n");
+  printf("3) Multiplicación\n");
   printf("4) Combinado\n");
   printf("\nOpción: ");
 
@@ -85,7 +85,7 @@ int setOperacion(void){
     scanf("%d", &seleccion);
     while(getchar() != '\n');
     if (seleccion != 1 && seleccion != 2 && seleccion != 3 && seleccion != 4){
-      printf("\nError. Seleccione una seleccionción valida: ");
+      printf("\nError. Seleccione una opción valida: ");
     }
   }while(seleccion != 1 && seleccion != 2 && seleccion != 3 && seleccion != 4);
 
@@ -96,7 +96,7 @@ int setDificultad(void){
   int seleccion;
 
   printf("Seleccione la dificultad\n\n");
-  printf("1) Facíl\n");
+  printf("1) Fácil\n");
   printf("2) Intermedio\n");
   printf("3) Avanzado\n");
   printf("\nOpción: ");
@@ -145,7 +145,7 @@ int pregCombinada(int ind, int q, int dificultad){
   p[1] = resta;
   p[2] = mult;
 
-  for (int i = 0; i < q; i++) {   //generar operaciones y numeros
+  for (int i = 0; i < q; i++) {   //generar operaciones y números
     op[i] = rand()%3;
     num[i] = numRand(dificultad);
   }
@@ -169,9 +169,10 @@ int pregCombinada(int ind, int q, int dificultad){
   }
 
   for (int i = 1; i < q; i++) {   //sumatoria total
-    num[0] =+ (*p[op[i]]) (num[0], num[i]);
+    num[0] = (*p[op[i]]) (num[0], num[i]);
   }
 
+  printf("Resultado: %d\n", num[0]);
   printf("Respuesta: ");
   scanf("%d", &rta);
   while(getchar() != '\n');
@@ -186,9 +187,9 @@ int pregCombinada(int ind, int q, int dificultad){
 
 void resultadoTest (int porcentaje, int p){
   printf("Resultados del test\n\n");
-  printf("Respuestas correctas: %d de %d (%d%%)\n\n", porcentaje, P, (porcentaje*100)/P);
+  printf("Respuestas correctas: %d de %d (%d%%)\n\n", porcentaje, p, (porcentaje*100)/p);
 
-  if((porcentaje*100)/P < 75){
+  if((porcentaje*100)/p < 75){
     printf("Pídale ayuda adicional a su maestro\n");
   }else{
     printf("¡Felicitaciones, está listo para pasar al siguiente nivel!\n");

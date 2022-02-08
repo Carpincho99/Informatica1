@@ -9,9 +9,9 @@
 #define CLEAR "clear" 
 #endif
 
-#define TITLE "Aprenda a multiplicar v4.0\n\n"
-#define P 3 //cantidad de preguntas
-#define PROGRESS_BAR_WIDHT 12*P
+#define TITLE "Aprenda a multiplicar v5.0\n\n"
+#define P 10 //cantidad de preguntas
+#define PROGRESS_BAR_WIDHT 5*P
 
 int numRand(int);
 int setOperacion(void);
@@ -79,7 +79,7 @@ int setOperacion(void){
   printf("Seleccione la dificulta\n\n");
   printf("1) Suma\n");
   printf("2) Resta\n");
-  printf("3) Multiplicacion\n");
+  printf("3) Multiplicación\n");
   printf("4) Aleatorio\n");
   printf("\nOpción: ");
 
@@ -87,7 +87,7 @@ int setOperacion(void){
     scanf("%d", &seleccion);
     while(getchar() != '\n');
     if (seleccion != 1 && seleccion != 2 && seleccion != 3 && seleccion != 4){
-      printf("\nError. Seleccione una seleccionción valida: ");
+      printf("\nError. Seleccione una opción valida: ");
     }
   }while(seleccion != 1 && seleccion != 2 && seleccion != 3 && seleccion != 4);
 
@@ -98,7 +98,7 @@ int setDificultad(void){
   int seleccion;
 
   printf("Seleccione la dificultad\n\n");
-  printf("1) Facíl\n");
+  printf("1) Fácil\n");
   printf("2) Intermedio\n");
   printf("3) Avanzado\n");
   printf("\nOpción: ");
@@ -126,9 +126,9 @@ int preg(int ind, int num1, int num2, char simbolo){
 
 void resultadoTest (int porcentaje, int p){
   printf("Resultados del test\n\n");
-  printf("Respuestas correctas: %d de %d (%d%%)\n\n", porcentaje, P, (porcentaje*100)/P);
+  printf("Respuestas correctas: %d de %d (%d%%)\n\n", porcentaje, p, (porcentaje*100)/p);
 
-  if((porcentaje*100)/P < 75){
+  if((porcentaje*100)/p < 75){
     printf("Pídale ayuda adicional a su maestro\n");
   }else{
     printf("¡Felicitaciones, está listo para pasar al siguiente nivel!\n");
@@ -178,6 +178,7 @@ int suma(int num1, int num2, int indice){
     return 0;
   }
 }
+
 int resta(int num1, int num2, int indice){
   int rta;
   rta = preg(indice, num1, num2, '-');
@@ -187,6 +188,7 @@ int resta(int num1, int num2, int indice){
     return 0;
   }
 }
+
 int mult(int num1, int num2, int indice){
 int rta;
   rta = preg(indice, num1, num2, '*');
@@ -196,6 +198,7 @@ int rta;
     return 0;
   }
 }
+
 int aleatorio(int num1, int num2, int indice){
   return (*op[rand()%3])(num1, num2, indice);
 }

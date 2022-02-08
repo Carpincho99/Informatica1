@@ -10,8 +10,8 @@
 #endif
 
 #define TITLE "Aprenda a multiplicar v4.0\n\n"
-#define P 3 //cantidad de preguntas
-#define PROGRESS_BAR_WIDHT 12*P
+#define P 10 //cantidad de preguntas
+#define PROGRESS_BAR_WIDHT 5*P
 
 int numRand(int);
 int setDificultad(void);
@@ -58,7 +58,7 @@ int setDificultad(void){
   int seleccion;
 
   printf("Seleccione la dificultad\n\n");
-  printf("1) Facíl\n");
+  printf("1) Fácil\n");
   printf("2) Intermedio\n");
   printf("3) Avanzado\n");
   printf("\nOpción: ");
@@ -99,7 +99,7 @@ void resultadoTest (int porcentaje, int p){
     printf("¡Felicitaciones, está listo para pasar al siguiente nivel!\n");
   }
 
-  printf("\n[Pulse enter para continuar...]\n");
+  printf("\n[Pulse enter para continuar...]");
   while(getchar() != '\n');
 }
 
